@@ -14,17 +14,18 @@ class ViewController: UIViewController {
     @IBOutlet weak var label: UILabel!
     var storedImageView = UIImageView()
     var currentImageView = UIImageView()
-    var colorButton = UIButton(), eraserButton = UIButton(), opacityButton = UIButton(), widthButton = UIButton(), arrowButton = UIButton()
+    var colorButton = UIButton(), eraserButton = UIButton(), widthButton = UIButton(), arrowButton = UIButton()
     var buttons : [UIButton]!
     var imageNames : [String]!
     var tagForSegue = Int()
+    var widthSlider = UISlider()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        buttons = [colorButton, eraserButton, opacityButton, widthButton, arrowButton]
+        buttons = [colorButton, eraserButton, widthButton, arrowButton]
         
-        imageNames = ["colorImage", "eraserImage", "opacityImage", "widthImage", "arrowImage"]
+        imageNames = ["colorImage", "eraserImage", "widthImage", "arrowImage"]
         
         storedImageView = UIImageView(frame:CGRectMake(0, 0, view.frame.size.width, view.frame.size.height - 100))
         self.view.addSubview(storedImageView)
@@ -36,14 +37,21 @@ class ViewController: UIViewController {
             image = resize(image!, newWidth: 60)
             buttons[i] = UIButton(type: UIButtonType.Custom) as UIButton
             buttons[i].frame = CGRectMake(CGFloat(i) * 60, view.frame.size.height - 60, 60, 60)
-            buttons[4].frame = CGRectMake(view.frame.size.width - 60, view.frame.size.height - 60, 60, 60)
+            buttons[3].frame = CGRectMake(view.frame.size.width - 60, view.frame.size.height - 60, 60, 60)
             buttons[i].setImage(image, forState: .Normal)
             buttons[i].addTarget(self, action: #selector(self.onTappedButton), forControlEvents:.TouchUpInside)
             self.view.addSubview(buttons[i])
             buttons[i].tag = i
         }
+        
+        widthSlider = UISlider(frame:CGRectMake(190, view.frame.size.height - 45, 150, 30))
+        widthSlider.minimumValue = 1.0
+        widthSlider.maximumValue = 50.0
+        widthSlider.value = 1.0
+        widthSlider.continuous = true
+        widthSlider.addTarget(self, action: #selector(widthValueDidChange), forControlEvents: .ValueChanged)
+        self.view.addSubview(widthSlider)
     }
-    
     
     func resize(image: UIImage, newWidth: CGFloat) -> UIImage {
         
@@ -57,8 +65,11 @@ class ViewController: UIViewController {
         return newImage
     }
     
+    func widthValueDidChange(sender: UISlider) {
+        width = CGFloat(widthSlider.value)
+    }
+    
     var mostRecentPoint = CGPoint.zero
-    var opacity: CGFloat = 1.0
     var singlePoint = true
     var color = UIColor.blackColor()
     var width : CGFloat = 1.0
@@ -100,7 +111,7 @@ class ViewController: UIViewController {
         UIGraphicsBeginImageContext(storedImageView.frame.size)
         storedImageView.image?.drawInRect(CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height - 100), blendMode: .Normal, alpha: 1.0)
         //saves everything to the screen
-        currentImageView.image?.drawInRect(CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height - 100), blendMode: .Normal, alpha: opacity)
+        currentImageView.image?.drawInRect(CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height - 100), blendMode: .Normal, alpha: 1.0)
         storedImageView.image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         currentImageView.image = nil
@@ -122,27 +133,20 @@ class ViewController: UIViewController {
             sender.tag = 4
             originalColor = color
             originalWidth = width
-            originalOpacity = opacity
             color = UIColor.whiteColor()
             width = 10.0
-            opacity = 1.0
-            sender.tag = 4
+            sender.tag = 3
         case 2:
             self.tagForSegue = 2
-            performSegueWithIdentifier("ParamSettings", sender: self)
         case 3:
-            self.tagForSegue = 3
-            performSegueWithIdentifier("ParamSettings", sender: self)
-        case 4:
             var image = UIImage(named: "eraserImage") as UIImage?
             image = resize(image!, newWidth: 60)
             buttons[1].setImage(image, forState: .Normal)
             color = originalColor
             width = originalWidth
-            opacity = originalOpacity
             sender.tag = 1
         default:
-            self.tagForSegue = 5
+            self.tagForSegue = 4
         }
     }
     
