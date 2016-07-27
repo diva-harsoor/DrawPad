@@ -12,6 +12,7 @@
 		792BBE441D47AED6002B80C9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 792BBE421D47AED6002B80C9 /* Main.storyboard */; };
 		792BBE461D47AED6002B80C9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 792BBE451D47AED6002B80C9 /* Assets.xcassets */; };
 		792BBE491D47AED6002B80C9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 792BBE471D47AED6002B80C9 /* LaunchScreen.storyboard */; };
+		792BBE8D1D47E484002B80C9 /* ParamSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792BBE8C1D47E484002B80C9 /* ParamSettingsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		792BBE451D47AED6002B80C9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		792BBE481D47AED6002B80C9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		792BBE4A1D47AED6002B80C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		792BBE8C1D47E484002B80C9 /* ParamSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParamSettingsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +59,7 @@
 				792BBE3E1D47AED6002B80C9 /* AppDelegate.swift */,
 				792BBE401D47AED6002B80C9 /* ViewController.swift */,
 				792BBE421D47AED6002B80C9 /* Main.storyboard */,
+				792BBE8C1D47E484002B80C9 /* ParamSettingsViewController.swift */,
 				792BBE451D47AED6002B80C9 /* Assets.xcassets */,
 				792BBE471D47AED6002B80C9 /* LaunchScreen.storyboard */,
 				792BBE4A1D47AED6002B80C9 /* Info.plist */,
@@ -136,6 +139,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				792BBE411D47AED6002B80C9 /* ViewController.swift in Sources */,
+				792BBE8D1D47E484002B80C9 /* ParamSettingsViewController.swift in Sources */,
 				792BBE3F1D47AED6002B80C9 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -286,6 +290,7 @@
 				792BBE4F1D47AED6002B80C9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
