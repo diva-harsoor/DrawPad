@@ -10,6 +10,8 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    
+    @IBOutlet weak var label: UILabel!
     var storedImageView = UIImageView()
     var currentImageView = UIImageView()
     var colorButton = UIButton(), eraserButton = UIButton(), opacityButton = UIButton(), widthButton = UIButton(), arrowButton = UIButton()
@@ -58,6 +60,7 @@ class ViewController: UIViewController {
     var mostRecentPoint = CGPoint.zero
     var opacity: CGFloat = 1.0
     var singlePoint = true
+    var color = UIColor.blackColor()
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         singlePoint = true
@@ -72,6 +75,7 @@ class ViewController: UIViewController {
         currentImageView.image?.drawInRect(CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height - 100))
         CGContextMoveToPoint(context, fromPoint.x, fromPoint.y)
         CGContextAddLineToPoint(context, toPoint.x, toPoint.y)
+        CGContextSetStrokeColorWithColor(context, color.CGColor)
         CGContextStrokePath(context)
         currentImageView.image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
@@ -115,23 +119,15 @@ class ViewController: UIViewController {
         performSegueWithIdentifier("ParamSettings", sender: self)
     }
     
+    @IBAction func prepareForUnwind(unwindSegue: UIStoryboardSegue) {
+        let mvc = unwindSegue.sourceViewController as! ParamSettingsViewController
+        label.text = String(mvc.buttonTag)
+        color = mvc.color
+    }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let dvc = segue.destinationViewController as! ParamSettingsViewController
         dvc.buttonTag = tagForSegue
-    }
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    }    
 }
 
