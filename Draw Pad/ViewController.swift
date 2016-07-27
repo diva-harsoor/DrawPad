@@ -12,15 +12,16 @@ class ViewController: UIViewController {
     
     var storedImageView = UIImageView()
     var currentImageView = UIImageView()
-    
     var colorButton = UIButton(), eraserButton = UIButton(), opacityButton = UIButton(), widthButton = UIButton(), arrowButton = UIButton()
     var buttons : [UIButton]!
     var imageNames : [String]!
-    
+    var tagForSegue = Int()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         buttons = [colorButton, eraserButton, opacityButton, widthButton, arrowButton]
+        
         imageNames = ["colorImage", "eraserImage", "opacityImage", "widthImage", "arrowImage"]
         
         storedImageView = UIImageView(frame:CGRectMake(0, 0, view.frame.size.width, view.frame.size.height - 100))
@@ -29,21 +30,18 @@ class ViewController: UIViewController {
         self.view.addSubview(currentImageView)
         
         for i in 0..<buttons.count {
-            var colorImage = UIImage(named: imageNames[i]) as UIImage?
-            colorImage = resize(colorImage!, newWidth: 60)
+            var image = UIImage(named: imageNames[i]) as UIImage?
+            image = resize(image!, newWidth: 60)
             buttons[i] = UIButton(type: UIButtonType.Custom) as UIButton
             buttons[i].frame = CGRectMake(CGFloat(i) * 60, view.frame.size.height - 60, 60, 60)
             buttons[4].frame = CGRectMake(view.frame.size.width - 60, view.frame.size.height - 60, 60, 60)
-            buttons[i].setImage(colorImage, forState: .Normal)
-            colorButton.addTarget(self, action: #selector(self.onTappedColorButton), forControlEvents:.TouchUpInside)
-            eraserButton.addTarget(self, action: #selector(self.onTappedEraserButton), forControlEvents:.TouchUpInside)
-            opacityButton.addTarget(self, action: #selector(self.onTappedOpacityButton), forControlEvents:.TouchUpInside)
-            widthButton.addTarget(self, action: #selector(self.onTappedWidthButton), forControlEvents:.TouchUpInside)
-            arrowButton.addTarget(self, action: #selector(self.onTappedArrowButton), forControlEvents:.TouchUpInside)
+            buttons[i].setImage(image, forState: .Normal)
+            buttons[i].addTarget(self, action: #selector(self.onTappedButton), forControlEvents:.TouchUpInside)
             self.view.addSubview(buttons[i])
+            buttons[i].tag = i
         }
-        
     }
+    
     
     func resize(image: UIImage, newWidth: CGFloat) -> UIImage {
         
@@ -101,24 +99,38 @@ class ViewController: UIViewController {
         currentImageView.image = nil
     }
     
-    // following four: some kind of pop up tab
-    
-    func onTappedColorButton(sender: AnyObject) {
+    func onTappedButton(sender: UIButton) {
+        switch(sender.tag) {
+        case 0:
+            self.tagForSegue = 0
+        case 1:
+            self.tagForSegue = 1
+        case 2:
+            self.tagForSegue = 2
+        case 3:
+            self.tagForSegue = 3
+        default:
+            self.tagForSegue = 4
+        }
+        performSegueWithIdentifier("ParamSettings", sender: self)
     }
     
-    func onTappedEraserButton(sender: AnyObject) {
+
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let dvc = segue.destinationViewController as! ParamSettingsViewController
+        dvc.buttonTag = tagForSegue
     }
+
     
-    func onTappedOpacityButton(sender: AnyObject) {
-    }
     
-    func onTappedWidthButton(sender: AnyObject) {
-    }
     
-    // segue, this view slides left
     
-    func onTappedArrowButton(sender: AnyObject) {
-    }
+    
+    
+    
+    
+    
+    
     
     
 }
