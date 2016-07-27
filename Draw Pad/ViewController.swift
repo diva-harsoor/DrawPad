@@ -61,6 +61,7 @@ class ViewController: UIViewController {
     var opacity: CGFloat = 1.0
     var singlePoint = true
     var color = UIColor.blackColor()
+    var width : CGFloat = 1.0
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         singlePoint = true
@@ -76,6 +77,8 @@ class ViewController: UIViewController {
         CGContextMoveToPoint(context, fromPoint.x, fromPoint.y)
         CGContextAddLineToPoint(context, toPoint.x, toPoint.y)
         CGContextSetStrokeColorWithColor(context, color.CGColor)
+        CGContextSetLineCap(context, .Round)
+        CGContextSetLineWidth(context, width)
         CGContextStrokePath(context)
         currentImageView.image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
@@ -103,20 +106,44 @@ class ViewController: UIViewController {
         currentImageView.image = nil
     }
     
+    var originalColor = UIColor()
+    var originalWidth = CGFloat()
+    var originalOpacity = CGFloat()
+
     func onTappedButton(sender: UIButton) {
         switch(sender.tag) {
         case 0:
             self.tagForSegue = 0
+            performSegueWithIdentifier("ParamSettings", sender: self)
         case 1:
-            self.tagForSegue = 1
+            var image = UIImage(named: "pencilImage") as UIImage!
+            image = resize(image!, newWidth: 60)
+            buttons[1].setImage(image, forState: UIControlState.Normal)
+            sender.tag = 4
+            originalColor = color
+            originalWidth = width
+            originalOpacity = opacity
+            color = UIColor.whiteColor()
+            width = 10.0
+            opacity = 1.0
+            sender.tag = 4
         case 2:
             self.tagForSegue = 2
+            performSegueWithIdentifier("ParamSettings", sender: self)
         case 3:
             self.tagForSegue = 3
+            performSegueWithIdentifier("ParamSettings", sender: self)
+        case 4:
+            var image = UIImage(named: "eraserImage") as UIImage?
+            image = resize(image!, newWidth: 60)
+            buttons[1].setImage(image, forState: .Normal)
+            color = originalColor
+            width = originalWidth
+            opacity = originalOpacity
+            sender.tag = 1
         default:
-            self.tagForSegue = 4
+            self.tagForSegue = 5
         }
-        performSegueWithIdentifier("ParamSettings", sender: self)
     }
     
     @IBAction func prepareForUnwind(unwindSegue: UIStoryboardSegue) {

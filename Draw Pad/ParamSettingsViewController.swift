@@ -17,7 +17,7 @@ class ParamSettingsViewController: UIViewController {
     var hueSlider = UISlider()
     var saturationSlider = UISlider()
     var brightnessSlider = UISlider()
-    var color = UIColor()
+    var color = UIColor(hue: 0.5, saturation: 1.0, brightness: 1.0, alpha: 1.0)
     
     var opacitySlider = UISlider()
     
