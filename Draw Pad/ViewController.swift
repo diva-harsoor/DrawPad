@@ -46,7 +46,7 @@ class ViewController: UIViewController {
         
         widthSlider = UISlider(frame:CGRectMake(190, view.frame.size.height - 45, 150, 30))
         widthSlider.minimumValue = 1.0
-        widthSlider.maximumValue = 50.0
+        widthSlider.maximumValue = 30.0
         widthSlider.value = 1.0
         widthSlider.continuous = true
         widthSlider.addTarget(self, action: #selector(widthValueDidChange), forControlEvents: .ValueChanged)
@@ -152,7 +152,6 @@ class ViewController: UIViewController {
     
     @IBAction func prepareForUnwind(unwindSegue: UIStoryboardSegue) {
         let mvc = unwindSegue.sourceViewController as! ParamSettingsViewController
-        label.text = String(mvc.buttonTag)
         color = mvc.color
     }
 

@@ -11,21 +11,44 @@ import UIKit
 class ParamSettingsViewController: UIViewController {
 
     var buttonTag = Int()
-    @IBOutlet weak var label: UILabel!
     @IBOutlet weak var returnButton: UIButton!
     
+    var hueLabel = UILabel()
     var hueSlider = UISlider()
+    var saturationLabel = UILabel()
     var saturationSlider = UISlider()
+    var brightnessLabel = UILabel()
     var brightnessSlider = UISlider()
     var color = UIColor(hue: 0.5, saturation: 1.0, brightness: 1.0, alpha: 1.0)
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        label.text = String(buttonTag)
         chooseColor()
     }
     
     func chooseColor() {
+        
+        hueLabel = UILabel(frame:CGRectMake(view.frame.size.width/2 - 150, view.frame.size.height/5 - 60, 300, 60))
+        hueLabel.textAlignment = NSTextAlignment.Center
+        hueLabel.text = "Hue"
+        hueLabel.font = hueLabel.font.fontWithSize(30)
+        hueLabel.textColor = color
+        self.view.addSubview(hueLabel)
+
+        saturationLabel = UILabel(frame:CGRectMake(view.frame.size.width/2 - 150, view.frame.size.height/5, 300, 60))
+        saturationLabel.textAlignment = NSTextAlignment.Center
+        saturationLabel.text = "Saturation"
+        saturationLabel.font = hueLabel.font.fontWithSize(30)
+        saturationLabel.textColor = color
+        self.view.addSubview(saturationLabel)
+
+        brightnessLabel = UILabel(frame:CGRectMake(view.frame.size.width/2 - 150, view.frame.size.height/5 + 60, 300, 60))
+        brightnessLabel.textAlignment = NSTextAlignment.Center
+        brightnessLabel.text = "Brightness"
+        brightnessLabel.font = hueLabel.font.fontWithSize(30)
+        brightnessLabel.textColor = color
+        self.view.addSubview(brightnessLabel)
+        
         hueSlider.tag = 0
         hueSlider = UISlider(frame:CGRectMake(view.frame.size.width/2 - 150, view.frame.size.height/2 - 30, 300, 30))
         hueSlider.minimumValue = 0.0
@@ -63,10 +86,12 @@ class ParamSettingsViewController: UIViewController {
     }
     
     func sliderValueDidChange(sender: UISlider!) {
-            updateColor()
-            hueSlider.tintColor = color
-            saturationSlider.tintColor = color
-            brightnessSlider.tintColor = color
-
+        updateColor()
+        hueSlider.tintColor = color
+        saturationSlider.tintColor = color
+        brightnessSlider.tintColor = color
+        hueLabel.textColor = color
+        saturationLabel.textColor = color
+        brightnessLabel.textColor = color
     }
 }
